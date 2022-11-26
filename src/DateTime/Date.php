@@ -3,7 +3,7 @@
 namespace Moody\ValueObject\DateTime;
 
 use DateTime;
-use InvalidArgumentException;
+use UnexpectedValueException;
 
 /**
  * Class Date.
@@ -21,7 +21,7 @@ class Date
         $nativeDateErrors = \DateTime::getLastErrors();
 
         if ($nativeDateErrors['warning_count'] > 0 || $nativeDateErrors['error_count'] > 0) {
-            throw new InvalidArgumentException("Incorrect date");
+            throw new UnexpectedValueException("Incorrect date");
         }
     }
 
