@@ -1,6 +1,7 @@
 {
     "name": "moodyra/value-objects",
     "description": "A collection of value objects.",
+    "type": "package",
     "autoload": {
         "psr-4": {
             "Moody\\ValueObject\\": "src/"
