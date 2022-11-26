@@ -1,0 +1,19 @@
+{
+    "name": "moodyra/value-objects",
+    "description": "A collection of value objects.",
+    "autoload": {
+        "psr-4": {
+            "Moody\\ValueObject\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Moody\\ValueObject\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
+    }
+}
