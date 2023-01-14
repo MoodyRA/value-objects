@@ -2,19 +2,17 @@
 
 namespace Moody\ValueObject\Identity;
 
+use Moody\ValueObject\BasicString;
 use UnexpectedValueException;
 use Ramsey\Uuid\Uuid as BaseUuid;
 use Ramsey\Uuid\Validator\GenericValidator;
 
-class Uuid
+/** @phpstan-consistent-constructor */
+class Uuid extends BasicString
 {
-    /** @var string */
-    protected string $value;
-
     /**
-     * UUID constructor.
-     *
      * @param string $value
+     * @throws UnexpectedValueException
      */
     public function __construct(string $value = '')
     {
@@ -29,7 +27,7 @@ class Uuid
             }
             $uuid = $value;
         }
-        $this->value = (string)$uuid;
+        parent::__construct((string)$uuid);
     }
 
     /**
@@ -40,13 +38,5 @@ class Uuid
     public static function generate(): Uuid
     {
         return new static();
-    }
-
-    /**
-     * @return string
-     */
-    public function getValue(): string
-    {
-        return $this->value;
     }
 }

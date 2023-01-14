@@ -5,6 +5,7 @@ namespace Moody\ValueObject\DateTime;
 use DateTime;
 use UnexpectedValueException;
 
+/** @phpstan-consistent-constructor */
 class Time
 {
     /**
@@ -13,6 +14,7 @@ class Time
      * @param int $hour
      * @param int $minute
      * @param int $second
+     * @throws UnexpectedValueException
      */
     public function __construct(protected int $hour, protected int $minute, protected int $second)
     {
@@ -24,13 +26,14 @@ class Time
     /**
      * @param int $hour
      * @return void
+     * @throws UnexpectedValueException
      */
     protected function verifyHour(int $hour): void
     {
         $options = [
             'options' => ['min_range' => 0, 'max_range' => 23],
         ];
-        if (false === filter_var($hour, FILTER_VALIDATE_INT, $options)) {
+        if (!filter_var($hour, FILTER_VALIDATE_INT, $options)) {
             throw new UnexpectedValueException("The hour must be an integer between 0 and 23, $hour given");
         }
     }
@@ -38,13 +41,14 @@ class Time
     /**
      * @param int $minute
      * @return void
+     * @throws UnexpectedValueException
      */
     protected function verifyMinute(int $minute): void
     {
         $options = [
             'options' => ['min_range' => 0, 'max_range' => 59],
         ];
-        if (false === filter_var($minute, FILTER_VALIDATE_INT, $options)) {
+        if (!filter_var($minute, FILTER_VALIDATE_INT, $options)) {
             throw new UnexpectedValueException("The minute must be an integer between 0 and 59, $minute given");
         }
     }
@@ -52,34 +56,35 @@ class Time
     /**
      * @param int $second
      * @return void
+     * @throws UnexpectedValueException
      */
     protected function verifySecond(int $second): void
     {
         $options = [
             'options' => ['min_range' => 0, 'max_range' => 59],
         ];
-        if (false === filter_var($second, FILTER_VALIDATE_INT, $options)) {
-            throw new UnexpectedValueException("The second must be an integer between 0 and 59, $minute given");
+        if (!filter_var($second, FILTER_VALIDATE_INT, $options)) {
+            throw new UnexpectedValueException("The second must be an integer between 0 and 59, $second given");
         }
     }
 
     /**
-     * Returns time as string in format G:i:s.
+     * Returns time as string in format H:i:s.
      *
      * @return string
      */
     public function __toString(): string
     {
-        return $this->toNativeDateTime()->format('G:i:s');
+        return $this->toNativeDateTime()->format('H:i:s');
     }
 
     /**
-     * Returns time as string in format G:i:s.
+     * Returns time as string in format H:i:s.
      *
      * @param string $format
      * @return string
      */
-    public function toFormat(string $format = 'G:i:s'): string
+    public function toFormat(string $format = 'H:i:s'): string
     {
         return $this->toNativeDateTime()->format($format);
     }
@@ -89,11 +94,12 @@ class Time
      *
      * @param DateTime $dateTime
      * @return Time
+     * @throws UnexpectedValueException
      */
     public static function fromNativeDateTime(DateTime $dateTime): Time
     {
         return new static(
-            (int)$dateTime->format('G'),
+            (int)$dateTime->format('H'),
             (int)$dateTime->format('i'),
             (int)$dateTime->format('s')
         );
@@ -103,6 +109,7 @@ class Time
      * Returns current Time.
      *
      * @return Time
+     * @throws UnexpectedValueException
      */
     public static function now(): Time
     {
@@ -114,6 +121,7 @@ class Time
      * Return zero time.
      *
      * @return Time
+     * @throws UnexpectedValueException
      */
     public static function zero(): Time
     {

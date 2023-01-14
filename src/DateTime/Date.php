@@ -5,43 +5,45 @@ namespace Moody\ValueObject\DateTime;
 use DateTime;
 use UnexpectedValueException;
 
-/**
- * Class Date.
- */
+/** @phpstan-consistent-constructor */
 class Date
 {
     /**
      * @param int $year
      * @param int $month
      * @param int $day
+     * @throws UnexpectedValueException
      */
     public function __construct(protected int $year, protected int $month, protected int $day)
     {
-        \DateTime::createFromFormat('Y-m-d', "$year-$month-$day");
+        $dateTime = \DateTime::createFromFormat('Y-m-d', "$year-$month-$day");
         $nativeDateErrors = \DateTime::getLastErrors();
 
-        if ($nativeDateErrors['warning_count'] > 0 || $nativeDateErrors['error_count'] > 0) {
+        if (
+            $nativeDateErrors !== false &&
+            ($nativeDateErrors['warning_count'] > 0 || $nativeDateErrors['error_count'] > 0)
+        ) {
             throw new UnexpectedValueException("Incorrect date");
         }
     }
 
     /**
-     * Returns date as string in format Y-n-j.
+     * Returns date as string in format Y-m-d.
      *
      * @return string
      */
     public function __toString(): string
     {
-        return $this->toNativeDateTime()->format('Y-n-j');
+        return $this->toNativeDateTime()->format('Y-m-d');
     }
 
     /**
-     * Returns date as string in format Y-n-j.
+     * Returns date as string in format Y-m-d.
      *
      * @param string $format
      * @return string
      */
-    public function toFormat(string $format = 'Y-n-j'): string
+    public function toFormat(string $format = 'Y-m-d'): string
     {
         return $this->toNativeDateTime()->format($format);
     }
