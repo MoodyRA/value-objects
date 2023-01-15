@@ -3,7 +3,7 @@
 namespace Moody\ValueObject\DateTime;
 
 use DateTime;
-use UnexpectedValueException;
+use Moody\ValueObject\ValueObjectIncorrectValueException;
 
 /** @phpstan-consistent-constructor */
 class Time
@@ -14,7 +14,7 @@ class Time
      * @param int $hour
      * @param int $minute
      * @param int $second
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     public function __construct(protected int $hour, protected int $minute, protected int $second)
     {
@@ -26,7 +26,7 @@ class Time
     /**
      * @param int $hour
      * @return void
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     protected function verifyHour(int $hour): void
     {
@@ -34,14 +34,14 @@ class Time
             'options' => ['min_range' => 0, 'max_range' => 23],
         ];
         if (!filter_var($hour, FILTER_VALIDATE_INT, $options)) {
-            throw new UnexpectedValueException("The hour must be an integer between 0 and 23, $hour given");
+            throw new ValueObjectIncorrectValueException("The hour must be an integer between 0 and 23, $hour given");
         }
     }
 
     /**
      * @param int $minute
      * @return void
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     protected function verifyMinute(int $minute): void
     {
@@ -49,14 +49,16 @@ class Time
             'options' => ['min_range' => 0, 'max_range' => 59],
         ];
         if (!filter_var($minute, FILTER_VALIDATE_INT, $options)) {
-            throw new UnexpectedValueException("The minute must be an integer between 0 and 59, $minute given");
+            throw new ValueObjectIncorrectValueException(
+                "The minute must be an integer between 0 and 59, $minute given"
+            );
         }
     }
 
     /**
      * @param int $second
      * @return void
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     protected function verifySecond(int $second): void
     {
@@ -64,7 +66,9 @@ class Time
             'options' => ['min_range' => 0, 'max_range' => 59],
         ];
         if (!filter_var($second, FILTER_VALIDATE_INT, $options)) {
-            throw new UnexpectedValueException("The second must be an integer between 0 and 59, $second given");
+            throw new ValueObjectIncorrectValueException(
+                "The second must be an integer between 0 and 59, $second given"
+            );
         }
     }
 
@@ -94,7 +98,7 @@ class Time
      *
      * @param DateTime $dateTime
      * @return Time
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     public static function fromNativeDateTime(DateTime $dateTime): Time
     {
@@ -109,7 +113,7 @@ class Time
      * Returns current Time.
      *
      * @return Time
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     public static function now(): Time
     {
@@ -121,7 +125,7 @@ class Time
      * Return zero time.
      *
      * @return Time
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     public static function zero(): Time
     {

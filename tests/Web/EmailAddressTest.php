@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Moody\ValueObject\Tests\Web;
 
+use Moody\ValueObject\ValueObjectIncorrectValueException;
 use Moody\ValueObject\Web\EmailAddress;
 
 class EmailAddressTest extends \PHPUnit\Framework\TestCase
@@ -19,7 +20,7 @@ class EmailAddressTest extends \PHPUnit\Framework\TestCase
 
     public function testEmailAddressIsIncorrect(): void
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(ValueObjectIncorrectValueException::class);
         new EmailAddress(self::INVALID_EMAIL_ADDRESS);
     }
 

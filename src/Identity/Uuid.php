@@ -3,7 +3,7 @@
 namespace Moody\ValueObject\Identity;
 
 use Moody\ValueObject\BasicString;
-use UnexpectedValueException;
+use Moody\ValueObject\ValueObjectIncorrectValueException;
 use Ramsey\Uuid\Uuid as BaseUuid;
 use Ramsey\Uuid\Validator\GenericValidator;
 
@@ -12,7 +12,7 @@ class Uuid extends BasicString
 {
     /**
      * @param string $value
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     public function __construct(string $value = '')
     {
@@ -23,7 +23,7 @@ class Uuid extends BasicString
             $pattern = '/' . $validator->getPattern() . '/';
 
             if (!\preg_match($pattern, $value)) {
-                throw new UnexpectedValueException("the passed value doesn't match the pattern");
+                throw new ValueObjectIncorrectValueException("the passed value doesn't match the pattern");
             }
             $uuid = $value;
         }

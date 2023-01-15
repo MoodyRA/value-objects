@@ -3,6 +3,7 @@
 namespace Moody\ValueObject\Tests\DateTime;
 
 use Moody\ValueObject\DateTime\Time;
+use Moody\ValueObject\ValueObjectIncorrectValueException;
 use PHPUnit\Framework\TestCase;
 
 class TimeTest extends TestCase
@@ -15,19 +16,19 @@ class TimeTest extends TestCase
 
     public function testTimeIsIncorrectByHour(): void
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(ValueObjectIncorrectValueException::class);
         new Time(25, 0, 0);
     }
 
     public function testTimeIsIncorrectByMinute(): void
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(ValueObjectIncorrectValueException::class);
         new Time(0, 60, 0);
     }
 
     public function testTimeIsIncorrectBySecond(): void
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(ValueObjectIncorrectValueException::class);
         new Time(0, 0, 60);
     }
 

@@ -3,7 +3,7 @@
 namespace Moody\ValueObject\DateTime;
 
 use DateTime;
-use UnexpectedValueException;
+use Moody\ValueObject\ValueObjectIncorrectValueException;
 
 /** @phpstan-consistent-constructor */
 class Date
@@ -12,7 +12,7 @@ class Date
      * @param int $year
      * @param int $month
      * @param int $day
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     public function __construct(protected int $year, protected int $month, protected int $day)
     {
@@ -23,7 +23,7 @@ class Date
             $nativeDateErrors !== false &&
             ($nativeDateErrors['warning_count'] > 0 || $nativeDateErrors['error_count'] > 0)
         ) {
-            throw new UnexpectedValueException("Incorrect date");
+            throw new ValueObjectIncorrectValueException("Incorrect date");
         }
     }
 

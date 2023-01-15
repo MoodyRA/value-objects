@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Moody\ValueObject\Web;
 
 use Moody\ValueObject\BasicString;
-use UnexpectedValueException;
+use Moody\ValueObject\ValueObjectIncorrectValueException;
 
 class EmailAddress extends BasicString
 
 {
     /**
      * @param string $emailAddress
-     * @throws UnexpectedValueException
+     * @throws ValueObjectIncorrectValueException
      */
     public function __construct(protected string $emailAddress)
     {
         if (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
-            throw new UnexpectedValueException("Invalid email address");
+            throw new ValueObjectIncorrectValueException("Invalid email address");
         }
         parent::__construct($emailAddress);
     }

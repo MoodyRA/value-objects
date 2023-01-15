@@ -3,6 +3,7 @@
 namespace Moody\ValueObject\Tests\DateTime;
 
 use Moody\ValueObject\DateTime\Date;
+use Moody\ValueObject\ValueObjectIncorrectValueException;
 use PHPUnit\Framework\TestCase;
 
 class DateTest extends TestCase
@@ -15,19 +16,19 @@ class DateTest extends TestCase
 
     public function testDateIsIncorrectByDay(): void
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(ValueObjectIncorrectValueException::class);
         new Date(2019, 1, 32);
     }
 
     public function testDateIsIncorrectByMonth(): void
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(ValueObjectIncorrectValueException::class);
         new Date(2019, 13, 1);
     }
 
     public function testDateIsIncorrectByYear(): void
     {
-        $this->expectException(\UnexpectedValueException::class);
+        $this->expectException(ValueObjectIncorrectValueException::class);
         new Date(-20, 1, 1);
     }
 
